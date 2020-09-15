@@ -1,9 +1,9 @@
 <?php
+// DRAFT - NOT WORKING
+// http://kpay.live/hash/hcsRunningHash.php
+// https://github.com/topshef/hash/blob/master/hcsRunningHash.php
 
-// http://kpay.live/scratchpad/hash/hcsRunningHash.php
-
-
-// calculate HCS running hash  
+// calculate HCS running hash
 // ref https://github.com/hashgraph/hedera-services/issues/88
 
 	echo '<pre>';
@@ -49,8 +49,9 @@
 	$input .=  pack('Q', $tx['topicSequenceNumber']);
   
 // 12. The output of the SHA-384 digest of the message bytes from the consensusSubmitMessage (48 bytes) 
-	$input .=  hash('sha384', pack('H*', $tx['message']));
-
+	$hashMsg = hash('sha384', $tx['message']);               // https://www.php.net/manual/en/function.hash.php
+	$input .=  pack('H*', $hashMsg);						 // https://www.php.net/manual/en/function.pack.php
+	//echo strlen(pack('H*', $hashMsg));
 
 // compare and report results
 	$expected = hash('sha384', $input);
