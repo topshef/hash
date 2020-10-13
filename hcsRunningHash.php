@@ -67,7 +67,8 @@
 	echo "kabuto consensusSeconds =$consensusSeconds\n";  
 	echo "kabuto consensusNanos =$consensusNanos\n";
 	
-	//2020-10-05T21:59:39.454+0000   <-- DG (summary API)
+	//consensus time
+	//2020-10-05T22:16:03.442+0000   <-- DG (summary API)
 	//2020-10-05T22:16:03.442497001Z <-- kabuto raw tx
 	
 	$input .=  pack('L', $consensusNanos);
