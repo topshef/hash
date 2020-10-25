@@ -2,6 +2,8 @@
 
 // DRAFT - works in most cases, but fails for some messages
 // See hardcoding in steps 1 & 2
+// debug examples at https://docs.google.com/spreadsheets/d/1uN_sJM2gsObn8yy064mEegWptGnzVFId95ZrueO_xTg/edit#gid=0
+
 // http://kpay.live/hash/hcsRunningHash.php
 // https://github.com/topshef/hash/blob/master/hcsRunningHash.php
 
@@ -9,17 +11,15 @@
 // ref https://github.com/hashgraph/hedera-services/issues/88
 
 
-echo '<pre>';
 $arrout =[]; // output array
 
 $topicRunningHashVersion = 3;
 $arrout['input']['topicRunningHashVersion'] = $topicRunningHashVersion;
 
 // read sample data from mirror node
-	//$url='http://hbar.live/mirror/hcs/?topicId=0.0.43738&limit=2&unpack=hex&fromSeq=5819&sortBy=asc';
 	$topic = $_GET['topic']; $topic = ($topic==null) ? '0.0.43738' : $topic;
 	$seq = $_GET['seq']; $seq = ($seq==null) ? '5801' : $seq;
-	$url="http://hbar.live/mirror/hcs/?topicId={$topic}&limit=2&unpack=hex&fromSeq={$seq}&sortBy=asc";
+	$url="https://hbar.live/mirror/hcs/?topicId={$topic}&limit=2&unpack=hex&fromSeq={$seq}&sortBy=asc";
 	$json = file_get_contents($url);
 	$arr = json_decode($json, true)['data'];
 	
@@ -134,7 +134,19 @@ $arrout['output']['expected'] = $expected;
 $arrout['output']['actual'] = $actual;
 $arrout['output']['result'] = ($expected == $actual) ? 'pass' : 'fail';
 
-print_r($arrout);
+// output
+	if (isset($_GET['csv'])) {
+		echo $arrout['output']['result'] . ',' .
+			$arrout['input']['url'] . '&outputformat=debug,' .
+			$arrout['debug']['kabutoTxId'] . ',' .
+			$arrout['debug']['consensusAt'] . ',' .
+			$arrout['debug']['url_kabuto'];
+			
+		
+	} else {
+		echo '<pre>';
+		print_r($arrout);
+	}
 
 
 // functions
