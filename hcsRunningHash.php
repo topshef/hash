@@ -1,7 +1,7 @@
 <?php
 
-// DRAFT - works in most cases, but fails for some messages
-// See hardcoding in steps 1 & 2
+// Should now be working, except where input data fails
+// 
 // debug examples at https://docs.google.com/spreadsheets/d/1uN_sJM2gsObn8yy064mEegWptGnzVFId95ZrueO_xTg/edit#gid=0
 
 // http://kpay.live/hash/hcsRunningHash.php
