@@ -89,8 +89,8 @@ $arrout['debug']['consensusAt'] = $consensusAt;
 //2020-10-05T22:22:40.814490Z 
 //$consensusNanos = 1 * substr($consensusAt, 20, 9);
 $lenNanos =  strlen($consensusAt) - 21;
-$consensusNanos = substr($consensusAt, 20, -1);
-$consensusNanos = $consensusNanos . str_repeat('0', 9 - strlen($consensusNanos));  // fill out zeros if needed (kabuto oddity?)
+$consensusNanos = substr($consensusAt, 20, $lenNanos);
+$consensusNanos = $consensusNanos . str_repeat('0', 9 - $lenNanos);  // fill out zeros if needed (kabuto oddity?)
 //eg seq 5808 nanos 814490 --> 814490000  
 $arrout['debug']['consensusNanos'] = $consensusNanos;
 
@@ -171,8 +171,7 @@ function decToByte($number, $totalbytes = 8) {
     $hex = dechex($number);
     $length = strlen($hex);
     if ($length > 1) {
-        $hex = (fmod($length, 2)==0) ? $hex : "0".$hex;
-        for ($i = 0; $i < $length; $i += 2) {
+        for ($i = 0; $i < $length - 1; $i += 2) {
             $a = hexdec($hex[$i]) << 4;
             $b = hexdec($hex[$i + 1]);
             array_push($bytes, (($a + $b + 128) % 256) - 128);
